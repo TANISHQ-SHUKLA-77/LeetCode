@@ -5,7 +5,9 @@ class Solution {
 
         for(int i=0; i<n; i++){
 
-            if((0x104111 >> (s.charAt(i) - 97) & 1) != 0) return true;
+            int ch = s.charAt(i);
+
+            if(ch == 'a' || ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') return true;
         }
         return false;
     }
