@@ -1,18 +1,20 @@
 class Solution {
+    int [][]dp;
     public int minScoreTriangulation(int[] values) {
-        int n = values.length;
-        int[][] dp = new int[n][n];
-        for(int len = 3; len <= n; len++){
-            for(int i=0; i+len -1 < n; i++){
-                int j = i+len - 1;
-                dp[i][j] = Integer.MAX_VALUE;
-
-                for(int k = i+1; k < j; k++){
-                    int price = dp[i][k] + dp[k][j] + values[i] * values[k] * values[j];
-                    dp[i][j] = Math.min(dp[i][j], price);
-                }
-            }
+        dp = new int[values.length][values.length];
+        return helper(values, 0, values.length-1);
+    }
+    int helper(int []a, int i, int j){
+        if(j - i < 2){
+            return 0;
         }
-        return dp[0][n-1];
+        if(dp[i][j] != 0)
+        return dp[i][j];
+        int min = Integer.MAX_VALUE;
+        for(int k = i+1 ; k < j ; k++){
+            int cost = a[i]*a[k]*a[j] + helper(a,i,k)+helper(a,k,j);
+            min = Math.min(min, cost);
+        }
+        return dp[i][j] = min;
     }
 }
