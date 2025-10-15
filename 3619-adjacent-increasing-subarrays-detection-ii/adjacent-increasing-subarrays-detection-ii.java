@@ -3,7 +3,7 @@ class Solution {
        
         int n = nums.size();
         int i = 0;
-        int res = 0;
+        int ans = 0;
         int prev = 0;
 
         while (i < n) {
@@ -14,12 +14,12 @@ class Solution {
             }
 
             int curr = i - start + 1;
-            res = Math.max(res, Math.max(curr >> 1, Math.min(curr, prev)));
+            ans = Math.max(ans, Math.max(curr >> 1, Math.min(curr, prev)));
             
             prev = curr;
             i++;
         }
         
-        return res;
+        return ans;
     }
 }
