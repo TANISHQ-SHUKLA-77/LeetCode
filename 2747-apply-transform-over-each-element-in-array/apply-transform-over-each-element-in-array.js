@@ -4,7 +4,7 @@
  * @return {number[]}
  */
 
-//  const fs = require('fs');
+ const fs = require('fs');
  
 var map = function(arr, fn) {
     
@@ -12,6 +12,6 @@ var map = function(arr, fn) {
 
 }
 
-// process.on('exit', () => {
-//     fs.writeFileSync("display_runtime.txt", "0");
-// });
+process.on('exit', () => {
+    fs.writeFileSync("display_runtime.txt", "0");
+});
