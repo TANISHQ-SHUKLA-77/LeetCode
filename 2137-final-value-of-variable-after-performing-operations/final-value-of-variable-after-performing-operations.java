@@ -1,17 +1,14 @@
 class Solution {
-    private int n;
     public int finalValueAfterOperations(String[] operations) {
-        n = operations.length;
-        int negatives = 0;
-        int positives = 0;
-        for(int i = 0; i < n; i++) {
-            if(operations[i].charAt(0) == '+' || operations[i].charAt(operations[i].length() - 1) == '+') {
-                positives++;
-            } else {
-                negatives++;
-            }
+        
+        int X = 0;  
+        
+        for (String op : operations) {
+            
+            if (op.contains("+")) X++;   
+            
+            else X--;  
         }
-
-        return positives - negatives;
+        return X;
     }
 }
