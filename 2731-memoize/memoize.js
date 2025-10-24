@@ -3,21 +3,20 @@
  * @return {Function}
  */
 
+ const fs = require('fs');
 function memoize(fn) {
-    
     const cache = new Map();
-
     return function(...args) {
         const key = JSON.stringify(args);
 
-        if (cache.has(key)) {
-            return cache.get(key); // return cached result if it exists
+        if(cache.has(key)){
+            return cache.get(key)
         }
 
-        const result = fn.apply(this, args); // compute new result
-        cache.set(key, result);               // store it in cache
-        return result;                        // return the result
-    };
+        const result = fn(...args);
+        cache.set(key, result);
+        return result;
+    }
 }
 
 /** 
