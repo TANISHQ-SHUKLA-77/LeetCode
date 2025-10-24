@@ -4,19 +4,21 @@
  */
 
 function memoize(fn) {
-    let mymap={};
-    return function(...args) {
-        const key=JSON.stringify(args);
-        
-        if(key in mymap){
-            return mymap[key];
-        }
-        const result=fn(...args);
-        mymap[key]=result;
-        return result;
-    }
-}
+    
+    const cache = new Map();
 
+    return function(...args) {
+        const key = JSON.stringify(args);
+
+        if (cache.has(key)) {
+            return cache.get(key); // return cached result if it exists
+        }
+
+        const result = fn.apply(this, args); // compute new result
+        cache.set(key, result);               // store it in cache
+        return result;                        // return the result
+    };
+}
 
 /** 
  * let callCount = 0;
