@@ -1,13 +1,15 @@
 class Solution {
     public int totalMoney(int n) {
+       
+        int ans = 0;
+        int extraValue = 0;
 
-        int q = n / 7 ; 
-        int r = n % 7 ; 
+        for(int i=1;i<=n;i++){
 
-        long full = 7L * q * (q + 7) / 2 ; 
-        
-        long rem = 1L * r * (q + 1) + 1L * r * (r - 1) / 2 ;
+            ans += (i%7 == 0 ? 7 : i%7) + extraValue;
 
-        return (int)(full + rem) ;
+            if (i/7 > extraValue) extraValue++;
+        }
+    return ans;
     }
 }
