@@ -1,16 +1,20 @@
 /**
  * @return {null|boolean|number|string|Array|Object}
  */
+ 
  const fs = require('fs')
+
 Array.prototype.last = function() {
     if (!this.length){
         return -1
     }
     return this[this.length-1]   
 };
+
 process.on('exit', () => {
     fs.writeFileSync('display_runtime.txt', '0');
 })
+
 /**
  * const arr = [1, 2, 3];
  * arr.last(); // 3
