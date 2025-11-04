@@ -1,45 +1,29 @@
-// this is really not a easy level sol its medium level and many explanations are there in submitted sol pls refer
-
 class Solution {
     public int[] findXSum(int[] nums, int k, int x) {
-        int n = nums.length;
-        int[] answer = new int[n-k+1];
-        
-        for(int i = 0 ; i<= n-k ; i++)
-        {
-            int[] freq = new int[51]; 
+        Map<Integer, Integer> map = new HashMap<>();
+        int [] res = new int [nums.length - k + 1];
 
-            for(int j = i; j<i+k ;j++){
-                freq[nums[j]]++;
+        for (int i = 0, j = 0, r = 0; j < nums.length; j++) {
+            map.put(nums[j], map.getOrDefault(nums[j], 0) + 1);
+
+            if (j >= k - 1) {
+                Queue<int []> q = new PriorityQueue<>((a,b) -> b[1] == a[1] ? b[0] - a[0] : b[1] - a[1]);
+                for (int key : map.keySet()) {
+                    q.add(new int [] {key, map.get(key)});
+                }
+
+                int m = x, sum = 0;
+
+                while (!q.isEmpty() && m-- > 0) {
+                    int [] a = q.remove();
+                    sum += a[0] * a[1];
+                }
+
+                res[r++] = sum;
+                map.put(nums[i], map.get(nums[i++]) - 1);
             }
-            answer[i] = getXSum(freq,x);
-        }
-       
-       return answer;
-    }
-
-    public int getXSum(int[] freq, int x){
-
-        int[][] arr = new int[51][2];
-
-        for(int i = 1 ; i< 51 ; i++){
-            arr[i][0] = i; 
-            arr[i][1] = freq[i]; 
         }
 
-        Arrays.sort(arr , (a,b) -> {
-            if(b[1] == a[1]) return b[0] - a[0];
-            return b[1] - a[1];
-        });
-
-        int sum = 0;
-        int count = 0;
-
-        for(int i = 0 ; i < 51 && count < x;i++){
-            sum += arr[i][0] * arr[i][1];
-            count++;
-        }
-
-        return sum;
+        return res;
     }
 }
