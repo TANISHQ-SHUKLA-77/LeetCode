@@ -2,15 +2,12 @@
  * @param {Function} fn
  * @return {Object}
  */
-Array.prototype.groupBy = function(fn) {
-    let map = new Map();
-    for(let i=0;i<this.length;i++){
-        let key = fn(this[i]);
-        if(map.has(key)){
-            map.get(key).push(this[i]);
-        }else map.set(key, [this[i]]);
-    }
-    return Object.fromEntries(map);
+Array.prototype.groupBy = function (fn) {
+    return this.reduce((acc, ele) => {
+        const key = fn(ele);
+        (acc[key] ||= []).push(ele);
+        return acc;
+    }, {});
 };
 
 /**
