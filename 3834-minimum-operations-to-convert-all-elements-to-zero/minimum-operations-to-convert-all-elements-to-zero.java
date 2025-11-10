@@ -1,18 +1,16 @@
 class Solution {
-
     public int minOperations(int[] nums) {
-        List<Integer> s = new ArrayList<>();
-        int res = 0;
-        for (int a : nums) {
-            while (!s.isEmpty() && s.get(s.size() - 1) > a) {
-                s.remove(s.size() - 1);
+        var stack = new int[nums.length + 1];
+        var top = 0;
+        var ans = 0;
+        for (var i = 0; i < nums.length; i++) {
+            while (stack[top] > nums[i]) {
+                top--;
+                ans++;
             }
-            if (a == 0) continue;
-            if (s.isEmpty() || s.get(s.size() - 1) < a) {
-                res++;
-                s.add(a);
-            }
+            if (stack[top] != nums[i])
+                stack[++top] = nums[i];
         }
-        return res;
+        return ans + top;
     }
 }
