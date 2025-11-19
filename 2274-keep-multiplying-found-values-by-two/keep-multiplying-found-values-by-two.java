@@ -1,20 +1,13 @@
 class Solution {
     public int findFinalValue(int[] nums, int original) {
         
-        int val = 0;
-        Arrays.sort(nums);
         int n = nums.length;
-
 
         for(int i=0; i<n; i++){
 
-            if(nums[i] == original){ 
-                val = original * 2;
-                original = val;
-            }
+            if(nums[i] == original) return findFinalValue(nums, original * 2);
 
-            else val = original;
         }
-        return val;
+        return original;
     }
 }
