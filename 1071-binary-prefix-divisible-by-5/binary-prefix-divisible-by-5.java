@@ -1,11 +1,33 @@
+import java.util.*;
+
 class Solution {
-    public List<Boolean> prefixesDivBy5(int[] nums) {
-    Boolean[] result = new Boolean[nums.length];
-    int xor = 0;
-    for (int i = 0; i < nums.length; i++) {
-      xor = ((xor << 1) | nums[i]) % 5;
-      result[i] = (xor % 5) == 0;
+
+  public static final int MIN_LENGTH = 1;
+  public static final int MAX_LENGTH = 100_000;
+
+
+  public List<Boolean> prefixesDivBy5(int[] nums) {
+    List<Boolean> list = null;
+    if(nums != null) {
+      list = new LinkedList<>();
+      final int length = nums.length;
+      int binary = 0;
+      for(int i = 0; i < length; ++i) {
+        int bit = nums[i];
+        binary <<= 1;
+        binary += bit;
+
+        binary %= 5;
+        list.add(binary == 0 ? Boolean.TRUE : Boolean.FALSE);
+      }
     }
-    return Arrays.asList(result);
+    return list;
+  }
+
+  static {
+    Solution s = new Solution();
+    for(int i = 0; i < 1000; ++i) {
+      s.prefixesDivBy5(new int[]{1, 0, 1});
     }
+  }
 }
