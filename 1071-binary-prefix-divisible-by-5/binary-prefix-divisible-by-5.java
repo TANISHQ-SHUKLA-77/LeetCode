@@ -1,13 +1,11 @@
 class Solution {
     public List<Boolean> prefixesDivBy5(int[] nums) {
-        List<Boolean> ans = new ArrayList<>();
-        int prefix = 0;
-
-        for (int bit : nums) {
-            prefix = (prefix * 2 + bit) % 5;
-            ans.add(prefix == 0);
-        }
-
-        return ans;
+    Boolean[] result = new Boolean[nums.length];
+    int xor = 0;
+    for (int i = 0; i < nums.length; i++) {
+      xor = ((xor << 1) | nums[i]) % 5;
+      result[i] = (xor % 5) == 0;
+    }
+    return Arrays.asList(result);
     }
 }
