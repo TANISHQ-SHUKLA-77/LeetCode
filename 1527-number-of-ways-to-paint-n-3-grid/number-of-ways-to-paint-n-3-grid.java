@@ -1,61 +1,35 @@
 class Solution {
-    int M = 1_000_000_007;
-    int[][] t;
-
-     // 12 possible row patterns
-    String[] states = {
-        "RYG", "RGY", "RYR", "RGR",
-        "YRG", "YGR", "YGY", "YRY",
-        "GRY", "GYR", "GRG", "GYG"
-    };
-
-    int solve(int n, int prev) {
-        if (n == 0)
-            return 1;
-
-        if (t[n][prev] != -1)
-            return t[n][prev];
-
-        int result = 0;
-        String last = states[prev];
-
-        for (int curr = 0; curr < 12; curr++) {
-            if (curr == prev)
-                continue;
-
-            String currPat = states[curr];
-            boolean conflict = false;
-
-            for (int col = 0; col < 3; col++) {
-                if (currPat.charAt(col) == last.charAt(col)) {
-                    conflict = true;
-                    break;
+    int mod = 1_000_000_007;
+    public long[][] matrixMultiply(long[][] mat1, long[][] mat2){
+        long[][] ans = new long[mat1.length][mat2[0].length];
+        for(int i=0;i<mat1.length;i++){
+            for(int j=0;j<mat2[0].length;j++){
+                for(int k=0;k<mat2.length;k++){
+                    ans[i][j] = ((ans[i][j] + mat1[i][k]*mat2[k][j]) % mod);
                 }
             }
-
-            if (!conflict) {
-                result = (result + solve(n - 1, curr)) % M;
-            }
         }
 
-        return t[n][prev] = result;
+        return ans;
     }
-
-    public int numOfWays(int n) {
-         t = new int[n][12];
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < 12; j++) {
-                t[i][j] = -1;
+    public long[][] matrixPower(long[][] mat, int n){
+        long[][] ans = {{1, 0},{0, 1}};
+        long[][] curr = mat;
+        while(n!=0){
+            if((n&1) == 1){
+                ans = matrixMultiply(ans, curr);
             }
+            curr = matrixMultiply(curr, curr);
+            n >>= 1;
         }
 
-        int result = 0;
-
-        for (int i = 0; i < 12; i++) {
-            result = (result + solve(n - 1, i)) % M;
-        }
-
-        return result;
+        return ans;
+    }
+    public int numOfWays(int n) {
+        long[][] mat = {{3,2},{2,2}};
+        long[][] multiplyMat = matrixPower(mat, n-1);
+        long[][] initialVector = {{6}, {6}};
+        long[][] finalVector = matrixMultiply(multiplyMat, initialVector);
+        return (int)((finalVector[0][0] + finalVector[1][0]) % mod);
     }
 }
